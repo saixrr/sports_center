@@ -5,7 +5,10 @@ import AccountLayout from "../layouts/account";
 import React from "react";
 import ProtectedRoute from "./ProtectedRoute";
 import News from "../pages/news";
+import Logout from "../pages/logout";
 import Dashboard from "../pages/dashboard"; // Import the Dashboard component
+
+import Matches from "../pages/matches";
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/signin" replace /> },
@@ -17,6 +20,10 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
+  {
+    path:"/logout",
+    element: <Logout />
+  },       
   {
     path: "account",
     element: (
@@ -33,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "news",
         element: <News />, // Add the News component for the news section
+      },
+      {
+        path: "matches",
+        element: <Matches />, // Add the News component for the news section
       },
     ],
   },
