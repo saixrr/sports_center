@@ -30,8 +30,8 @@ const Appbar = () => {
   const { pathname } = useLocation()
 
   const navigation = [
-    { name: 'Projects', href: '/account/projects', current: false },
-    { name: 'Members', href: '/account/members', current: false },
+    { name: 'Dashboard', href: '/account', current: false },
+    { name: 'news', href: '/', current: false },
   ]
 
   return (
@@ -46,7 +46,7 @@ const Appbar = () => {
                     <img
                     className="h-8"
                     src={Logo}
-                    alt="Smarter Tasks"
+                    alt="sports_center"
                   />
                 </div>
                 <div className="hidden md:block">
