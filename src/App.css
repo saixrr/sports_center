@@ -40,3 +40,14 @@
   .read-the-docs {
     color: #888;
   }
+
+  /* Your CSS file (e.g., App.css) */
+.matches-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.match-item {
+  margin-right: 1rem;
+}
