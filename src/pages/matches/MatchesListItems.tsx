@@ -5,8 +5,7 @@ import { fetchNewMatches } from '../../context/matches/actions';
 const MatchesListItems: React.FC = () => {
   const matchesState = useMatchState();
   const matchesDispatch = useMatchDispatch();
-
-  const { matches=[], isLoading, isError, errorMessage } = matchesState;
+  const { matches, isLoading, isError, errorMessage } = matchesState;
   console.log(matches)
 
   useEffect(() => {

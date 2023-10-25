@@ -10,7 +10,7 @@ export const fetchNewMatches = async ( dispatch:any) => {
         });
         const data = await response.json();
         console.log(data);
-        dispatch({type:"FETCH_MATCHES_SUCCESS",payload:data})
+        dispatch({ type: 'FETCH_MATCHES_SUCCESS', payload: data.matches });
     } catch (error) {
       console.log('Error fetching news MATCHES:', error);
       dispatch({type:"FETCH_MATCHES_FAILURE",payload:'Unable to load matches'})
