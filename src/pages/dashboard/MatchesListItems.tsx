@@ -28,9 +28,9 @@ const MatchesListItems: React.FC = () => {
       <h2 className="text-2xl font-semibold text-blue-800 mb-4">Live Matches</h2>
       <div className="flex flex-row space-x-4">
         {runningMatches.map((match: any) => (
-          <div key={match.id} className="w-72 h-60">
+          <div key={match.id} className="h-50 w-120">
             <div className="mb-4">
-              <div className="border p-5 h-50 w-100 rounded-md hover:shadow-md bg-white shadow-md transition duration-300">
+              <div className="border p-5 h- w-100 rounded-md hover:shadow-md bg-white shadow-md transition duration-300">
                 <div className="mb-4 w-full">
                   <h1 className="text-2xl font-semibold text-blue-800 uppercase antialiased">
                     {match.sportName}
@@ -63,13 +63,13 @@ const MatchesListItems: React.FC = () => {
                       className="w-6 h-6"
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                         d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
                       ></path>
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                         d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
                       ></path>
                     </svg>
@@ -86,8 +86,8 @@ const MatchesListItems: React.FC = () => {
                       className="w-6 h-6 mx-auto"
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                         d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
                       ></path>
                     </svg>
