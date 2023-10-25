@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNewsState, useNewsDispatch } from '../../context/news/context';
 import { fetchNewsArticles } from '../../context/news/actions';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const NewsListItems: React.FC = () => {
   const newsState = useNewsState();
@@ -21,15 +21,28 @@ const NewsListItems: React.FC = () => {
     return <span>{errorMessage}</span>;
   }
 
+  // Function to filter articles based on the selected sport
+  const filterArticlesBySport = (selectedSport: string | null) => {
+    if (selectedSport === null) {
+      return articles; // Show all articles when no sport is selected
+    }
+    return articles.filter((article: any) => article.sport.name === selectedSport);
+  };
+
+  // Get the filtered articles based on the selected sport
+  const filteredArticles = filterArticlesBySport(null); // Pass the selected sport here
+
   return (
-    <div className='w-3/4'>
-      {articles.map((article: any) => (
+    <div className="w-3/4">
+      {filteredArticles.map((article: any) => (
         <div key={article.id} className="w-full flex items-center mb-4 border border-gray-500 rounded p-2">
           <div className="w-3/4">
             <h2 className="text-xl font-bold text-gray-800 mb-2">{article.title}</h2>
             <p className="text-gray-600">{article.summary}</p>
-            <p className=" text-left text-gray-500 block mt-0">{new Date(article.date).toLocaleDateString()}</p>
-            <Link to={`/account/news/${article.id}`} className=" text-center text-blue-500 block mt-0">Read more</Link>
+            <p className="text-left text-gray-500 block mt-0">{new Date(article.date).toLocaleDateString()}</p>
+            <Link to={`/account/news/${article.id}`} className="text-center text-blue-500 block mt-0">
+              Read more
+            </Link>
           </div>
           <div className="w-1/4">
             <p className="text-gray-500 text-center">{article.sport.name}</p>

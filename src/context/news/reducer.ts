@@ -1,10 +1,14 @@
 interface NewsArticle {
-    id: number;
-    title: string;
-    summary: string;
-    thumbnail: string;
-    content: string;
-  }
+  id: number;
+  title: string;
+  summary: string;
+  thumbnail: string;
+  content: string;
+  date: string;
+  teams: { id: number; name: string }[]; // Array of team objects
+  sport: { id: number; name: string }; // Sport object
+}
+
   
   export interface NewsState {
     articles: NewsArticle[];

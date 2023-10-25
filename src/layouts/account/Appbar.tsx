@@ -31,7 +31,7 @@ const Appbar = () => {
 
   const navigation = [
     { name: 'Dashboard', href: '/account', current: false },
-    { name: 'news', href: '/account/news', current: false },
+    // { name: 'news', href: '/account/news', current: false },
     { name:'Matches', href: '/account/matches',current:false},
   ]
 

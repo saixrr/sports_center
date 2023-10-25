@@ -1,13 +1,15 @@
-
 interface Match {
-    id: number;
-    name: string;
-    location: string;
-    sportName: string;
-    endsAt: string;
-    isRunning: boolean;
-    teams: { id: number; name: string }[];
-  }
+  id: number;
+  name: string;
+  location: string;
+  sportName: string;
+  endsAt: string;
+  isRunning: boolean;
+  teams: { id: number; name: string }[];
+  score: { [teamName: string]: string };
+}
+
+
   
   export interface MatchState {
     matches: Match[];

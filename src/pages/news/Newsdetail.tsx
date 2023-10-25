@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { useNewsDispatch, useNewsState } from '../../context/news/context';
 import { fetchArticleById } from '../../context/news/actions';
-import { Dialog } from '@headlessui/react'; 
+import { Dialog } from '@headlessui/react';
+
 
 const NewsDetail: React.FC = () => {
   const newsState = useNewsState();
   const newsDispatch = useNewsDispatch();
   const { articleId } = useParams<{ articleId?: string }>() || {};
+  const Navigate = useNavigate()
 
   useEffect(() => {
     if (articleId) {
@@ -17,40 +19,45 @@ const NewsDetail: React.FC = () => {
 
   const { selectedArticle } = newsState;
 
-  // Create a state to manage the modal open/close state
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   if (!selectedArticle) {
     return <div>No article selected or not found.</div>;
   }
-
+  const closeDialogAndNavigate = () => {
+    setIsOpen(false);
+    Navigate('/account/dashboard'); // Navigate to /account/dashboard
+  };
   return (
     <div>
-      <h2>{selectedArticle.title}</h2>
-      <button onClick={() => setIsOpen(true)}>Open Modal</button>
-
       <Dialog
         open={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={ closeDialogAndNavigate}
+
         className="fixed inset-0 z-10 overflow-y-auto"
       >
         <div className="min-h-screen px-4 text-center">
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-          <span
-            className="inline-block h-screen align-middle"
-            aria-hidden="true"
-          >
+          <span className="inline-block h-screen align-middle" aria-hidden="true">
             &#8203;
           </span>
-          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-            <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-              Article Content
-            </Dialog.Title>
-            <div className="mt-2">
-              <p className="text-sm text-gray-500">{selectedArticle.content}</p>
-            </div>
-
+          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl " style={{color:"black"}}>
+            <img
+              src={selectedArticle.thumbnail}
+              alt={selectedArticle.title}
+              className="w-full h-auto"
+            />
+            <h2 className="nws-dtl-hdln font-bold" >{selectedArticle.title}</h2>
+            <p className="text-sm text-gray-500 mt-2">{selectedArticle.date}</p>
+            <p className="text-sm mt-2">
+              Sport: {selectedArticle.sport.name}
+            </p>
+            <p className="text-sm mt-2">
+              Teams: {selectedArticle.teams.map((team) => team.name).join(' vs ')}
+            </p>
+            <p className="text-sm mt-4 text-gray-500">{selectedArticle.summary}</p>
+            <p className="text-sm mt-4">{selectedArticle.content}</p>
             <div className="mt-4">
               <button
                 type="button"

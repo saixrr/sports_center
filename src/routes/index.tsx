@@ -6,7 +6,7 @@ import Signup from "../pages/signup";
 import AccountLayout from "../layouts/account";
 import React from "react";
 import ProtectedRoute from "./ProtectedRoute";
-import News from "../pages/news";
+// import News from "../pages/news";
 import Logout from "../pages/logout";
 import Dashboard from "../pages/dashboard"; // Import the Dashboard component
 import NewsDetail from "../pages/news/Newsdetail";
@@ -41,13 +41,8 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "news",
-        element: <News />,
-        children: [
-          {index:true , element:<Navigate to ="../" />},
-          // { path: "/", element: <Navigate to="/account/news" replace /> },
-          { path: ":articleId", element: <NewsDetail/> }, // Article detail route
-        ],
+        path: "news/:articleId",
+        element:<NewsDetail />
       },
       {
         path: "matches",

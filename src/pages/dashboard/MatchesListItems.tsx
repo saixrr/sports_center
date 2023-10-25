@@ -7,6 +7,7 @@ const MatchesListItems: React.FC = () => {
   const matchesDispatch = useMatchDispatch();
 
   const { matches, isLoading, isError, errorMessage } = matchesState;
+  
 
   useEffect(() => {
     fetchNewMatches(matchesDispatch);
@@ -50,6 +51,20 @@ const MatchesListItems: React.FC = () => {
                       {match.teams[1].name}
                     </div>
                   </div>
+                  {/* <div className="mb-2 text-sm font-medium tracking-tight text-gray-900 dark:text-white" style={{color:'green'}}>
+                    SCORE:
+                  </div>
+                  <ol className="list-decimal pl-4">
+                    {match.score &&
+                      Object.entries(match.score).map(([team, score]) => (
+                        <li
+                          key={team}
+                          className="text-sm text-gray-600 dark:text-gray-400"
+                        >
+                          {team}: {score}
+                        </li>
+                      ))} */}
+                  {/* </ol> */}
                 </div>
                 <div className="flex justify-between items-center mt-4">
                   <div className="text-gray-600">
@@ -63,13 +78,13 @@ const MatchesListItems: React.FC = () => {
                       className="w-6 h-6"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
                       ></path>
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
                       ></path>
                     </svg>
@@ -86,8 +101,8 @@ const MatchesListItems: React.FC = () => {
                       className="w-6 h-6 mx-auto"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
                       ></path>
                     </svg>
