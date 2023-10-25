@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 const NewsList = React.lazy(() => import("./NewsList"));
 // import NewsDeta from "./NewProject";
 import ErrorBoundary from "../../components/ErrorBoundary";
+// import NewsDetail from "./Newsdetail";
 
 const News = () => {
   return (

@@ -1,4 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
+
+
 import Signin from "../pages/signin";
 import Signup from "../pages/signup";
 import AccountLayout from "../layouts/account";
@@ -7,8 +9,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import News from "../pages/news";
 import Logout from "../pages/logout";
 import Dashboard from "../pages/dashboard"; // Import the Dashboard component
-
+import NewsDetail from "../pages/news/Newsdetail";
 import Matches from "../pages/matches";
+
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/signin" replace /> },
@@ -21,9 +24,9 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path:"/logout",
-    element: <Logout />
-  },       
+    path: "/logout",
+    element: <Logout />,
+  },
   {
     path: "account",
     element: (
@@ -35,15 +38,20 @@ const router = createBrowserRouter([
       { index: true, element: <Navigate to="/account/news" replace /> },
       {
         path: "dashboard",
-        element: <Dashboard />, // Use the Dashboard component here
+        element: <Dashboard />,
       },
       {
         path: "news",
-        element: <News />, // Add the News component for the news section
+        element: <News />,
+        children: [
+          {index:true , element:<Navigate to ="../" />},
+          // { path: "/", element: <Navigate to="/account/news" replace /> },
+          { path: ":articleId", element: <NewsDetail/> }, // Article detail route
+        ],
       },
       {
         path: "matches",
-        element: <Matches />, // Add the News component for the news section
+        element: <Matches />,
       },
     ],
   },

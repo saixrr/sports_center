@@ -31,3 +31,4 @@ export const NewsProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     </NewsStateContext.Provider>
   );
 };
+
