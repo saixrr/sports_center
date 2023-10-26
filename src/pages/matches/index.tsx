@@ -8,7 +8,7 @@ const Matches = () => {
     <>
       <div className="flex justify-between">
         <h2 className="text-2xl font-medium tracking-tight text-slate-700">
-          Live Scores
+          Matches
         </h2>
       </div>
       <ErrorBoundary>

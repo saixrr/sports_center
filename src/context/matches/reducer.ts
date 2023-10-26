@@ -1,4 +1,4 @@
-interface Match {
+export interface Match {
   id: number;
   name: string;
   location: string;
@@ -7,6 +7,8 @@ interface Match {
   isRunning: boolean;
   teams: { id: number; name: string }[];
   score: { [teamName: string]: string };
+  startsAt:string;
+  story:string
 }
 
 

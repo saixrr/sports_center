@@ -28,7 +28,7 @@ const MatchesListItems: React.FC = () => {
             <h2 className="text-xl font-bold text-gray-800 mb-2">{match.name}</h2>
             <p className="text-gray-600">{match.location}</p>
             <p className="text-left text-gray-500 block mt-0">{new Date(match.endsAt).toLocaleDateString()}</p>
-            <a href={`/scores/${match.id}`} className="text-center text-blue-500 block mt-0">Live Score</a>
+            <a href={`/account/matches/${match.id}`} className="text-center text-blue-500 block mt-0">details</a>
           </div>
           <div className="w-1/4">
             {match.teams.map((team: any) => (

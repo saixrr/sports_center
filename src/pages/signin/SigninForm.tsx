@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom'; // Import Link from 'react
 const SigninForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string>(''); 
 
   const navigate = useNavigate();
 
@@ -19,7 +20,10 @@ const SigninForm: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Sign-in failed');
+        const errorData = await response.json();
+        console.error('Sign-in failed. Response:', response.status, errorData);
+        setError(errorData);
+        return;
       }
 
       console.log('Sign-in successful');
@@ -61,6 +65,9 @@ const SigninForm: React.FC = () => {
             className="w-full border rounded-md py-2 px-3 text-white-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue"
           />
         </div>
+        {error && ( 
+          <div className="text-red-500">{error}</div>
+        )}
         <button type="submit" className="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-white mt-4">Sign In</button>
       </form>
       <p className="text-gray-700 mt-2">

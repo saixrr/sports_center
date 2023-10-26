@@ -1,5 +1,5 @@
 import { useState, useContext, Fragment } from 'react'
-import { Disclosure, Menu, Transition,Switch } from '@headlessui/react'
+import { Disclosure, Menu, Transition, Switch } from '@headlessui/react'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { ThemeContext } from "../../context/theme";
 import Logo from "../../assets/images/logo.png"
@@ -9,13 +9,15 @@ import React from 'react';
 const userNavigation = [
   { name: 'Profile', href: '#' },
   { name: 'Sign out', href: '/logout' },
+  { name: 'Sign-in', href: '/signin' },
+  { name: 'Sign-up', href: '/signup' }
 ]
 
 const classNames = (...classes: string[]): string => classes.filter(Boolean).join(' ');
 
 const Appbar = () => {
   const { theme, setTheme } = useContext(ThemeContext)
-  const [enabled, setEnabled] = useState(theme=='dark')
+  const [enabled, setEnabled] = useState(theme === 'dark')
 
   const toggleTheme = () => {
     let newTheme = ''
@@ -32,61 +34,66 @@ const Appbar = () => {
   const navigation = [
     { name: 'Dashboard', href: '/account', current: false },
     // { name: 'news', href: '/account/news', current: false },
-    { name:'Matches', href: '/account/matches',current:false},
+    { name: 'Matches', href: '/account/matches', current: false },
   ]
 
   return (
     <>
-      <Disclosure as="nav" className="border-b border-slate-200">
+      <Disclosure as="nav" className="bg-slate-600 text-white border-b border-slate-200">
         {() => (
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-
-                    <img
+                  <img
                     className="h-8"
                     src={Logo}
-                    alt="sports_center"
+                    alt="Sports Center"
                   />
                 </div>
                 <div className="hidden md:block">
-                  <div className="ml-10 flex items-baseline space-x-4">
-                    {navigation.map((item) => { 
-                      const isCurrent = pathname.includes(item.href)
+                  <div className="ml-10 flex items-center">
+                    <div className="flex items-baseline space-x-4">
+                      {navigation.map((item) => {
+                        const isCurrent = pathname.includes(item.href)
 
-                      return (
-                        <Link
-                          key={item.name}
-                          to={item.href}
-                          className={classNames(
-                            isCurrent
-                              ? 'bg-slate-50 text-blue-700'
-                              : 'text-slate-500 hover:text-blue-600',
-                            'rounded-md px-3 py-2 text-sm font-medium'
-                          )}
-                          aria-current={isCurrent ? 'page' : undefined}
-                        >
-                          {item.name}
-                        </Link>
-                    )})}
+                        return (
+                          <Link
+                            key={item.name}
+                            to={item.href}
+                            className={classNames(
+                              isCurrent
+                                ? 'bg-slate-50 text-blue-700'
+                                : 'text-slate-500 hover:text-blue-600',
+                              'rounded-md px-3 py-2 text-sm font-medium'
+                            )}
+                            aria-current={isCurrent ? 'page' : undefined}
+                          >
+                            {item.name}
+                          </Link>
+                        )
+                      })}
+                    </div>
                   </div>
                 </div>
+              </div>
+              <div >
+                <h2 className='font-semibold font-serif italic'>SPORTS-CENTER</h2>
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
                   <Switch
-            checked={enabled}
-            onChange={toggleTheme}
-            className={`${enabled ? 'bg-slate-400' : 'bg-slate-700'}
-              relative inline-flex h-[24px] w-[100px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-          >
-            <span
-              aria-hidden="true"
-              className={`${enabled ? 'translate-x-9' : 'translate-x-0'}
-                pointer-events-none inline-block h-[16px] w-[16px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
-            />
-          </Switch>
+                    checked={enabled}
+                    onChange={toggleTheme}
+                    className={`${enabled ? 'bg-slate-400' : 'bg-slate-700'}
+                      relative inline-flex h-[24px] w-[100px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`${enabled ? 'translate-x-9' : 'translate-x-0'}
+                        pointer-events-none inline-block h-[16px] w-[16px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                    />
+                  </Switch>
                   <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="rounded-full bg-white p-1 text-gray-400 hover:text-blue-600">
@@ -106,15 +113,15 @@ const Appbar = () => {
                         {userNavigation.map((item) => (
                           <Menu.Item key={item.name}>
                             {({ active }) => (
-                              <a
-                                href={item.href}
+                              <Link
+                                to={item.href}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
                                 )}
                               >
                                 {item.name}
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         ))}

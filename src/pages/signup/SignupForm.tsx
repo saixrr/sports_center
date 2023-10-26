@@ -6,6 +6,7 @@ const SignupForm: React.FC = () => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [error, setError] = useState<string>(''); 
 
   const navigate = useNavigate();
 
@@ -20,7 +21,10 @@ const SignupForm: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Sign-up failed');
+        const errorData = await response.json();
+        console.error('Sign-up failed. Response:', response.status, errorData);
+        setError(errorData.errors);
+        return;
       }
 
       console.log('Sign-up successful');
@@ -30,16 +34,16 @@ const SignupForm: React.FC = () => {
       localStorage.setItem('userData', JSON.stringify(data.user));
       console.log(data);
 
-      navigate('/signin');
+      navigate('/account/dashboard');
     } catch (error) {
       console.error('Sign-up failed:', error);
     }
   };
 
   return (
-    <div>
+    <div >
       <form onSubmit={handleSubmit}>
-        <div>
+        <div >
           <label className="block text-gray-700 font-semibold mb-2">Your Name:</label>
           <input
             type="text"
@@ -47,7 +51,7 @@ const SignupForm: React.FC = () => {
             id="userName"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue"
+            className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue" style={{color:'white'}}
           />
         </div>
         <div>
@@ -58,7 +62,7 @@ const SignupForm: React.FC = () => {
             id="userEmail"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
-            className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue"
+            className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue" style={{color:'white'}}
           />
         </div>
         <div>
@@ -69,9 +73,12 @@ const SignupForm: React.FC = () => {
             id="userPassword"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
-            className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue"
+            className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue" style={{color:'white'}}
           />
         </div>
+        {error && ( 
+          <div className="text-red-500">{error}</div>
+        )}
         <button
           type="submit"
           className="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-gray mt-4"
