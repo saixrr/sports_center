@@ -11,7 +11,7 @@ import Logout from "../pages/logout";
 import Dashboard from "../pages/dashboard"; // Import the Dashboard component
 import NewsDetail from "../pages/news/Newsdetail";
 import Matches from "../pages/matches";
-import MatchDetail from "../pages/matches/Matchdetail";
+import MatchDetail from "../pages/matches/MatchDetail";
 import NotFound from "../pages/NotFound";
 
 
