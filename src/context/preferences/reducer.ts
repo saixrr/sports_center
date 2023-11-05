@@ -22,7 +22,7 @@ export type Preference = {
     | { type: "FETCH_PREFERENCES_SUCCESS"; payload: Preference[] }
     | { type: "FETCH_PREFERENCES_FAILURE"; payload: string }
     | { type: "UPDATE_PREFERENCES_REQUEST" }
-    | { type: "UPDATE_PREFERENCES_SUCCESS" }
+    | { type: "UPDATE_PREFERENCES_SUCCESS";payload:Preference[] }
     | { type: "UPDATE_PREFERENCES_FAILURE"; payload: string };
   
   export const preferencesReducer = (state: PreferencesState = initialPreferencesState, action: PreferencesActions): PreferencesState => {
@@ -54,6 +54,8 @@ export type Preference = {
         // You can add the success update logic here if needed
         return {
           ...state,
+          isLoading: false,
+          preferences:action.payload
         };
       case "UPDATE_PREFERENCES_FAILURE":
         // You can add the update failure logic here if needed

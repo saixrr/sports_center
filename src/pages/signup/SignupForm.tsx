@@ -30,7 +30,7 @@ const SignupForm: React.FC = () => {
       console.log('Sign-up successful');
 
       const data = await response.json();
-      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('authToken', data.auth_token);
       localStorage.setItem('userData', JSON.stringify(data.user));
       console.log(data);
 

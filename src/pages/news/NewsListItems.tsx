@@ -24,8 +24,6 @@ const NewsListItems: React.FC = () => {
   // Function to filter articles based on the selected sport or trending
   const filterArticles = () => {
     if (selectedSport === '') {
-      // Show 5 latest articles, one from each sport
-      
       return articles;
     }
     if (selectedSport === 'Trending') {
@@ -49,7 +47,7 @@ const NewsListItems: React.FC = () => {
   const filteredArticles = filterArticles();
 
   return (
-    <div className="w-3/4">
+    <div className="w-3/4 mr-0 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
       <div className="sticky mb-2">
         <div className="flex space-x-3" style={{ color: 'black' }}>
           <button className="py-2 px-4 rounded-full bg-gray-100" onClick={() => setSelectedSport('Trending')}>
@@ -74,8 +72,8 @@ const NewsListItems: React.FC = () => {
         <span>{errorMessage}</span>
       ) : (
         filteredArticles.map((article: any) => (
-          <div key={article.id} className="w-full flex items-center mb-4 border-4 border-black-400 rounded-xl p-4">
-            <div className="w-3/4">
+          <div key={article.id} className="w-full flex items-center mb-4  border-4 border-black-400 rounded-xl p-4">
+            <div className="w-3/4 ">
               <h2 className="text-xl font-bold text-gray-800 mb-2">{article.title}</h2>
               <p className="text-gray-600">{article.summary}</p>
               <p className="text-left text-gray-500 block mt-0">{new Date(article.date).toLocaleDateString()}</p>

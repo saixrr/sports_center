@@ -3,8 +3,6 @@ import { API_ENDPOINT } from '../../config/constants';
 
 export const fetchPreferences = async (dispatch:any) => {
   const token= localStorage.getItem("authToken")?? "";
-  
-
   try {
     dispatch({ type: 'FETCH_PREFERENCES_REQUEST' });
     const response = await fetch(`${API_ENDPOINT}/user/preferences`, {
@@ -39,7 +37,7 @@ export const updatePreferences = async (dispatch: React.Dispatch<PreferencesActi
       } else {
         const data = await response.json();
         console.log(data);
-        dispatch({ type: 'UPDATE_PREFERENCES_SUCCESS' });
+        dispatch({ type: 'UPDATE_PREFERENCES_SUCCESS',payload:data });
       }
     } catch (error) {
       console.error('Error updating preferences:', error);
