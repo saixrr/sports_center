@@ -1,41 +1,59 @@
-import { useState, useContext, Fragment } from 'react'
-import { Disclosure, Menu, Transition, Switch } from '@headlessui/react'
-import { UserCircleIcon } from '@heroicons/react/24/outline'
-import { ThemeContext } from "../../context/theme";
-import Logo from "../../assets/images/logo.png"
-import { Link, useLocation } from "react-router-dom"
+import { useState, useContext, Fragment, useEffect } from 'react';
+import { Disclosure, Menu, Transition, Switch } from '@headlessui/react';
+import { UserCircleIcon, CogIcon } from '@heroicons/react/24/outline';
+import { ThemeContext } from '../../context/theme';
+import Logo from '../../assets/images/logo.png';
+import { Link, useLocation } from 'react-router-dom';
 import React from 'react';
 
-const userNavigation = [
-  { name: 'Profile', href: '#' },
-  { name: 'Sign out', href: '/logout' },
+
+
+let userNavigation = [
   { name: 'Sign-in', href: '/signin' },
   { name: 'Sign-up', href: '/signup' }
-]
+];
 
 const classNames = (...classes: string[]): string => classes.filter(Boolean).join(' ');
 
 const Appbar = () => {
-  const { theme, setTheme } = useContext(ThemeContext)
-  const [enabled, setEnabled] = useState(theme === 'dark')
+  const { theme, setTheme } = useContext(ThemeContext);
+  const [enabled, setEnabled] = useState(theme === 'dark');
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('authToken'));
+  let user = '';
+  let profile = '';
+  if (isAuthenticated) {
+    user = localStorage.getItem('userData') ?? '';
+    profile = JSON.parse(user);
+  }
+  useEffect(() => {
+    setIsAuthenticated(!!localStorage.getItem('authToken'));
+  }, []);
+
+  if (isAuthenticated) {
+    userNavigation = [
+      // { name: 'Preferences', href: '/preferences' }, // Add Preferences button
+      { name: 'Profile', href: '#' },
+      { name: 'Sign out', href: '/logout' }
+    ];
+  }
 
   const toggleTheme = () => {
-    let newTheme = ''
+    let newTheme = '';
     if (theme === 'light') {
-      newTheme = 'dark'
+      newTheme = 'dark';
     } else {
-      newTheme = 'light'
+      newTheme = 'light';
     }
-    setEnabled(!enabled)
-    setTheme(newTheme)
-  }
-  const { pathname } = useLocation()
+    setEnabled(!enabled);
+    setTheme(newTheme);
+  };
+  const { pathname } = useLocation();
 
   const navigation = [
     { name: 'Dashboard', href: '/account', current: false },
     // { name: 'news', href: '/account/news', current: false },
-    { name: 'Matches', href: '/account/matches', current: false },
-  ]
+    { name: 'Matches', href: '/account/matches', current: false }
+  ];
 
   return (
     <>
@@ -45,17 +63,13 @@ const Appbar = () => {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <img
-                    className="h-8"
-                    src={Logo}
-                    alt="Sports Center"
-                  />
+                  <img className="h-8" src={Logo} alt="Sports Center" />
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-center">
                     <div className="flex items-baseline space-x-4">
                       {navigation.map((item) => {
-                        const isCurrent = pathname.includes(item.href)
+                        const isCurrent = pathname.includes(item.href);
 
                         return (
                           <Link
@@ -67,18 +81,17 @@ const Appbar = () => {
                                 : 'text-slate-500 hover:text-blue-600',
                               'rounded-md px-3 py-2 text-sm font-medium'
                             )}
-                            aria-current={isCurrent ? 'page' : undefined}
-                          >
+                            aria-current={isCurrent ? 'page' : undefined}>
                             {item.name}
                           </Link>
-                        )
+                        );
                       })}
                     </div>
                   </div>
                 </div>
               </div>
-              <div >
-                <h2 className='font-semibold font-serif italic'>SPORTS-CENTER</h2>
+              <div>
+                <h2 className="font-semibold font-serif italic">SPORTS-CENTER</h2>
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
@@ -86,14 +99,25 @@ const Appbar = () => {
                     checked={enabled}
                     onChange={toggleTheme}
                     className={`${enabled ? 'bg-slate-400' : 'bg-slate-700'}
-                      relative inline-flex h-[24px] w-[100px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
-                  >
+                      relative inline-flex h-[24px] w-[100px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}>
                     <span
                       aria-hidden="true"
                       className={`${enabled ? 'translate-x-9' : 'translate-x-0'}
                         pointer-events-none inline-block h-[16px] w-[16px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
                     />
                   </Switch>
+                  <Menu as="div" className="relative ml-3">
+                    <div>
+                      <a href="/account/dashboard/preferences">
+                        {' '}
+                        {/* Replace '/preferences' with your actual preferences link */}
+                        <Menu.Button className="rounded-full bg-white p-1 text-gray-400 hover:text-blue-600">
+                          <CogIcon className="h-6 w-6" aria-hidden="true" />
+                        </Menu.Button>
+                      </a>
+                    </div>
+                  </Menu>
+
                   <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="rounded-full bg-white p-1 text-gray-400 hover:text-blue-600">
@@ -107,8 +131,7 @@ const Appbar = () => {
                       enterTo="transform opacity-100 scale-100"
                       leave="transition ease-in duration-75"
                       leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
+                      leaveTo="transform opacity-0 scale-95">
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {userNavigation.map((item) => (
                           <Menu.Item key={item.name}>
@@ -118,8 +141,7 @@ const Appbar = () => {
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
-                                )}
-                              >
+                                )}>
                                 {item.name}
                               </Link>
                             )}
@@ -135,7 +157,7 @@ const Appbar = () => {
         )}
       </Disclosure>
     </>
-  )
-}
+  );
+};
 
 export default Appbar;

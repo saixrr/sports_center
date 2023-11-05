@@ -13,10 +13,11 @@ import NewsDetail from "../pages/news/Newsdetail";
 import Matches from "../pages/matches";
 import MatchDetail from "../pages/matches/MatchDetail";
 import NotFound from "../pages/NotFound";
+import Preferences from "../pages/dashboard/preferences";
 
 
 const router = createBrowserRouter([
-  { path: "/", element: <Navigate to="/signin" replace /> },
+  { path: "/", element: <Navigate to="/account/dashboard" replace /> },
   {
     path: "/notfound",
     element: <NotFound />,
@@ -50,12 +51,17 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
         children:[
+          {path:"preferences",
+          element:<Preferences />
+        },
+          
           {path:':matchId',
            element:<MatchDetail />},
            {
             path: "articles/:articleId",
             element:<NewsDetail />
           },
+       
         ]
       },
       

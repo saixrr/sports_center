@@ -7,11 +7,13 @@ import { NewsProvider } from "./context/news/context";
 import { MatchProvider } from "./context/matches/context";
 import React from "react";
 import { SportsProvider } from "./context/sports/context";
+import { PreferencesProvider } from "./context/preferences/context";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div className={`h-screen w-full mx-auto py-2 ${theme === "dark" ? "dark" : ""}`}>
+      <PreferencesProvider>
       <MatchProvider>
         <NewsProvider>
           <SportsProvider>
@@ -19,6 +21,7 @@ const App = () => {
           </SportsProvider>
         </NewsProvider>
       </MatchProvider>
+      </PreferencesProvider>
     </div>
   );
 };
