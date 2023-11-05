@@ -20,10 +20,8 @@ const Appbar = () => {
   const [enabled, setEnabled] = useState(theme === 'dark');
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('authToken'));
   let user = '';
-  let profile = '';
   if (isAuthenticated) {
     user = localStorage.getItem('userData') ?? '';
-    profile = JSON.parse(user);
   }
   useEffect(() => {
     setIsAuthenticated(!!localStorage.getItem('authToken'));
