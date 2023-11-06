@@ -15,6 +15,7 @@ const NewsListItems: React.FC = () => {
   const { sports } = sportsState;
 
   const [selectedSport, setSelectedSport] = useState<string | null>('');
+  const [isScrolling, setScrolling] = useState(false);
 
   useEffect(() => {
     fetchNewsArticles(newsDispatch);
@@ -46,10 +47,25 @@ const NewsListItems: React.FC = () => {
   // Get the filtered articles based on the selected sport
   const filteredArticles = filterArticles();
 
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setScrolling(true);
+    } else {
+      setScrolling(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="w-3/4 mr-0 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
-      <div className="sticky mb-2">
-        <div className="flex space-x-3" style={{ color: 'black' }}>
+    <div className="w-3/4 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+      <div className={`sticky top-0 mb-2 bg-white z-10 ${isScrolling ? 'shadow-md' : ''}`}>
+        <div className="flex space-x-3 " style={{ color: 'black' }}>
           <button className="py-2 px-4 rounded-full bg-gray-100" onClick={() => setSelectedSport('Trending')}>
             TRENDING
           </button>

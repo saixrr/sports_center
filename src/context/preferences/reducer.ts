@@ -1,6 +1,7 @@
 export type Preference = {
     id: number;
     sports: string[];
+    teams:string[];
   };
   
   export interface PreferencesState {

@@ -13,7 +13,7 @@ import NewsDetail from "../pages/news/Newsdetail";
 import Matches from "../pages/matches";
 import MatchDetail from "../pages/matches/MatchDetail";
 import NotFound from "../pages/NotFound";
-import Preferences from "../pages/dashboard/preferences";
+import Preferences from "../pages/preferences";
 
 
 const router = createBrowserRouter([
@@ -51,9 +51,6 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
         children:[
-          {path:"preferences",
-          element:<Preferences />
-        },
           
           {path:':matchId',
            element:<MatchDetail />},
@@ -63,7 +60,11 @@ const router = createBrowserRouter([
           },
        
         ]
+      
       },
+      {path:"preferences",
+      element:<Preferences />
+    },
       
       {
         path: "matches",
