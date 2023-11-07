@@ -1,4 +1,4 @@
-import { Preference,PreferencesActions } from './reducer';
+import { Preferences,PreferencesActions } from './reducer';
 import { API_ENDPOINT } from '../../config/constants';
 
 export const fetchPreferences = async (dispatch:any) => {
@@ -17,7 +17,7 @@ export const fetchPreferences = async (dispatch:any) => {
   }
 };
 
-export const updatePreferences = async (dispatch: React.Dispatch<PreferencesActions>, preferences: Preference[]) => {
+export const updatePreferences = async (dispatch: React.Dispatch<PreferencesActions>, preferences: Preferences[]) => {
     const token = localStorage.getItem("authToken") ?? "";
     try {
       dispatch({ type: 'UPDATE_PREFERENCES_REQUEST' });

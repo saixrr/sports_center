@@ -108,13 +108,13 @@ const Appbar = () => {
                   </Switch>
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <a href="/account/dashboard/preferences">
+                      <Link to="/account/preferences">
                         {' '}
-                        {/* Replace '/preferences' with your actual preferences link */}
                         <Menu.Button className="rounded-full bg-white p-1 text-gray-400 hover:text-blue-600">
                           <CogIcon className="h-6 w-6" aria-hidden="true" />
                         </Menu.Button>
-                      </a>
+                      </Link>
+
                     </div>
                   </Menu>
 

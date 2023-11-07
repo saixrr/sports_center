@@ -4,6 +4,7 @@ import MatchesListItems from './MatchesListItems';
 
 import { Outlet } from 'react-router-dom';
 import SportTeamFilter from './SportTeamFilter';
+import PreferenceListItems from '../preferences/PreferenceListItems';
 
 // import { Link } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ const Dashboard: React.FC = () => {
       <SportTeamFilter />
       <Outlet />
       <NewsListItems />
+      <PreferenceListItems />
       
     </div>
   );

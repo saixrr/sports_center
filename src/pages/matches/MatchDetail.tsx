@@ -21,8 +21,8 @@ const MatchDetail: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   if (!selectedMatch) {
-    return <div>No match selected or not found.</div>;
-  }
+    return <div>No match selected or not found.</div>
+  };
 
   const closeDialogAndNavigate = () => {
     setIsOpen(false);

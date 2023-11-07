@@ -1,5 +1,5 @@
 import React from "react";
-import PreferenceDialog  from "./PreferenceListItems";
+import PreferenceListItems from "./PreferenceListItems";
 
 const Preferences = () => {
   return (
@@ -9,7 +9,7 @@ const Preferences = () => {
           User Preferences
         </h2>
       </div>
-      <PreferenceDialog />
+      <PreferenceListItems />
     </>
   );
 };

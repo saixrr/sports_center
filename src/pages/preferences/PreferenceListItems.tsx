@@ -1,34 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { useSportsState } from "../../context/sports/context";
-import { useTeamsState } from "../../context/teams/context";
-import { usePreferencesState,usePreferencesDispatch } from "../../context/preferences/context";
-import { updatePreferences } from "../../context/preferences/actions";
+import { useSportsState,useSportsDispatch } from "../../context/sports/context";
 
+import { useTeamsState ,useTeamsDispatch} from "../../context/teams/context";
+import { usePreferencesState, usePreferencesDispatch } from "../../context/preferences/context";
+import { updatePreferences } from "../../context/preferences/actions";
+import { fetchSports } from "../../context/sports/actions";
+import { fetchTeams } from "../../context/teams/actions";
+import { fetchPreferences } from "../../context/preferences/actions";
 export default function PreferenceListItems() {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const sportState = useSportsState();
+  console.log(sportState)
+  const sportsDispatch=useSportsDispatch();
   const teamState = useTeamsState();
+  console.log(teamState)
+  const teamsDispatch=useTeamsDispatch();
   const preferencesState = usePreferencesState();
-  const preferencesDispatch =usePreferencesDispatch()
+  const preferencesDispatch = usePreferencesDispatch();
 
-  const { sports} = sportState;
-  const { teams} = teamState;
-  const {preferences,isLoading,isError,errorMessage} = preferencesState
-
+  const { sports } = sportState;
+  const { teams } = teamState;
+  
+  const { preferences, isLoading, isError, errorMessage } = preferencesState;
+  useEffect(()=>{
+    fetchSports(sportsDispatch);
+    fetchTeams(teamsDispatch);
+    fetchPreferences(preferencesDispatch)
+  },[sportsDispatch,teamsDispatch,preferencesDispatch])
+  console.log(teams)
   useEffect(() => {
-   
-    setSelectedSports(preferences.sports || []);
-    setSelectedTeams(preferences.teams || []);
+    if (preferences && preferences.length > 0) {
+      const userPreferences = preferences[0]; 
+
+      setSelectedSports(userPreferences.sports || []);
+      setSelectedTeams(userPreferences.teams || []);
+    }
   }, [preferences]);
 
-  if (isLoading ) {
+  if (isLoading) {
     return <span>Loading...</span>;
   }
 
-  if (isError ) {
+  if (isError) {
     return <span>{errorMessage}</span>;
   }
 
@@ -41,24 +57,31 @@ export default function PreferenceListItems() {
   };
 
   const savePreferences = () => {
-    const preferences = {
-      sports: selectedSports,
-      teams: selectedTeams,
-    };
-
+    let updatedPreferences:any =[];
+  
+    if (preferences && preferences.length > 0) {
+      updatedPreferences = [...preferences];
+      updatedPreferences[1] = {
+        ...updatedPreferences[1],
+        sports: selectedSports,
+        teams: selectedTeams,
+      };
+    }
+  
     // Call the updatePreferences function to update the preferences
-    updatePreferences(preferencesDispatch,preferences);
-
+    updatePreferences(preferencesDispatch, updatedPreferences);
+  
     closeModal();
   };
+  
 
   return (
     <>
-      <button onClick={openModal} className="custom-preference-button">
+      <button onClick={openModal} className="custom-preference-button" style={{color:'black'}}>
         Preferences
       </button>
       {modalIsOpen && (
-        <div className="custom-modal">
+        <div className="custom-modal" style={{color:'black'}}>
           <h2>Select Your Preferred Sports and Teams</h2>
           <div>
             <h3>Sports</h3>
@@ -82,8 +105,9 @@ export default function PreferenceListItems() {
               </div>
             ))}
           </div>
-          <div>
+          {/* <div>
             <h3>Teams</h3>
+      
             {teams.map((team) => (
               <div key={team.id} className="custom-checkbox">
                 <input
@@ -102,8 +126,10 @@ export default function PreferenceListItems() {
                 />
                 {team.name}
               </div>
+                
             ))}
-          </div>
+              
+          </div> */}
           <button onClick={savePreferences} className="custom-save-button">
             Save Preferences
           </button>
@@ -112,3 +138,4 @@ export default function PreferenceListItems() {
     </>
   );
 }
+
