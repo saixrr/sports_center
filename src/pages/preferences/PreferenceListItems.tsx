@@ -185,8 +185,8 @@ export default function PreferenceListItems() {
                         <h1 className="text-lg font-medium leading-6 text-gray-900">
                           Favorite Teams
                         </h1>
-                        {/* <div className="grid grid-cols-5 gap-3">
-                          {teams.map((team) => (
+                        <div className="grid grid-cols-5 gap-3">
+                          {teams.map((team:any) => (
                             <div
                               key={team.id}
                               className="flex items-center space-x-2"
@@ -215,7 +215,7 @@ export default function PreferenceListItems() {
                               </label>
                             </div>
                           ))}
-                        </div> */}
+                        </div>
 
                         <div className="mt-4 space-x-2">
                           <button
