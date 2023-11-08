@@ -3,6 +3,8 @@ import { useMatchState, useMatchDispatch } from '../../context/matches/context';
 import { fetchNewMatches } from '../../context/matches/actions';
 import { API_ENDPOINT } from '../../config/constants';
 import { Link } from 'react-router-dom';
+import { usePreferencesState,usePreferencesDispatch } from '../../context/preferences/context';
+import { fetchPreferences } from '../../context/preferences/actions';
 
 // Define a type for the match data
 type Match = {
@@ -17,17 +19,21 @@ type Match = {
 };
 
 const MatchesListItems: React.FC = () => {
+  const isAuthenticated = !!localStorage.getItem('authToken')
   const matchesState = useMatchState();
   const matchesDispatch = useMatchDispatch();
   const [isRotated, setIsRotated] = useState(false);
-
+  const preferencesState:any = usePreferencesState();
+  const preferencesDispatch=usePreferencesDispatch();
+  const { preferences, isLoading: preferencesLoading, isError: preferencesError, errorMessage: preferencesErrorMessage } = preferencesState;
   const { matches, isLoading, isError, errorMessage } = matchesState;
 
   useEffect(() => {
     fetchNewMatches(matchesDispatch);
-  }, [matchesDispatch]);
+    fetchPreferences(preferencesDispatch)
+  }, []);
 
-  const [runningMatchesWithScores, setRunningMatchesWithScores] = useState<Match[]>([]);
+  let [runningMatchesWithScores, setRunningMatchesWithScores] = useState<Match[]>([]);
 
   const handleRefreshClick = () => {
     // Toggle the rotation state
@@ -71,13 +77,41 @@ const MatchesListItems: React.FC = () => {
     fetchScoresForRunningMatches();
   }, [matches]);
 
+  if (preferencesLoading) {
+    return <span>Loading preferences...</span>;
+  }
+
+  if (preferencesError) {
+    return <span>{preferencesErrorMessage}</span>;
+  }
+
   if (matches.length === 0 && isLoading) {
-    return <span>Loading...</span>;
+    return <span>Loading matches...</span>;
   }
 
   if (isError) {
     return <span>{errorMessage}</span>;
   }
+
+  // Extract user preferences
+  // const userPreferences = preferences[0];
+  // console.log(userPreferences)
+
+ if(isAuthenticated){
+  runningMatchesWithScores = runningMatchesWithScores.filter((match: Match) => {
+    if(preferences && preferences.sports && preferences.teams){
+    // Check if the sport is in user preferences
+    const sportInPreferences = preferences.sports.includes(match.sportName);
+
+    // Check if any of the teams are in user preferences
+    const teamsInPreferences = match.teams.some((team) => preferences.teams.includes(team.name));
+
+    return sportInPreferences || teamsInPreferences;
+    }
+  });
+}
+console.log(runningMatchesWithScores)
+
 
   return (
     <div className="p-5 border border-gray-100 shadow-sm rounded-md w-3/4 mt-0 mb-4 relative">
@@ -87,7 +121,7 @@ const MatchesListItems: React.FC = () => {
         className="w-8 h-8 p-1 bg-blue-800 text-white rounded-full absolute top-2 right-2 z-10 transform transition-transform"
         onClick={handleRefreshClick}
       >
-        <svg
+<svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

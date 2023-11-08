@@ -3,6 +3,7 @@ import { useNewsState, useNewsDispatch } from '../../context/news/context';
 import { fetchNewsArticles } from '../../context/news/actions';
 import { useSportsState, useSportsDispatch } from '../../context/sports/context';
 import { fetchSports } from '../../context/sports/actions';
+import { usePreferencesState } from '../../context/preferences/context';
 import { Link } from 'react-router-dom';
 
 const NewsListItems: React.FC = () => {
@@ -10,9 +11,13 @@ const NewsListItems: React.FC = () => {
   const newsDispatch = useNewsDispatch();
   const sportsState = useSportsState();
   const sportsDispatch = useSportsDispatch();
+  const preferencesState:any=usePreferencesState()
 
   const { articles, isLoading, isError, errorMessage } = newsState;
-  const { sports } = sportsState;
+  let { sports } = sportsState;
+  const isAuthenticated = !!localStorage.getItem("authToken");
+  const { preferences } = preferencesState;
+ 
 
   const [selectedSport, setSelectedSport] = useState<string | null>('');
   const [isScrolling, setScrolling] = useState(false);
@@ -21,14 +26,26 @@ const NewsListItems: React.FC = () => {
     fetchNewsArticles(newsDispatch);
     fetchSports(sportsDispatch);
   }, [newsDispatch, sportsDispatch]);
-
+  
+    // const filteredSports = sports.filter((sport) => {
+    //   // Check if the sport name is included in user preferences
+    //   return preferences.some((userPref:any) => userPref.sports.includes(sport.name));
+    // });
+    // const [nsports, setNsports] = useState(sports);
   // Function to filter articles based on the selected sport or trending
+  if(isAuthenticated){
+    if(preferences && preferences.sports && preferences.teams){
+      console.log(preferences.sports)
+      sports=sports.filter((sport:any)=>preferences.sports.includes(sport.name))
+      console.log(sports)
+    }
+  }
   const filterArticles = () => {
     if (selectedSport === '') {
       return articles;
     }
     if (selectedSport === 'Trending') {
-      // Show trending articles when "Trending" is selected
+      
       const latestArticles: any[] = [];
       sports.forEach((sport: any) => {
         const sportArticles = articles.filter((article: any) => article.sport.name === sport.name);
@@ -44,7 +61,6 @@ const NewsListItems: React.FC = () => {
     return articles.filter((article: any) => article.sport.name === selectedSport);
   };
 
-  // Get the filtered articles based on the selected sport
   const filteredArticles = filterArticles();
 
   const handleScroll = () => {
@@ -61,7 +77,7 @@ const NewsListItems: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
+  
   return (
     <div className="w-3/4 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
       <div className={`sticky top-0 mb-2 bg-white z-10 ${isScrolling ? 'shadow-md' : ''}`}>

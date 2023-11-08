@@ -5,23 +5,32 @@ import { useSportsState, useSportsDispatch } from '../../context/sports/context'
 import { fetchSports } from '../../context/sports/actions';
 import { API_ENDPOINT } from '../../config/constants';
 import { Link } from 'react-router-dom';
+import { usePreferencesState,usePreferencesDispatch } from '../../context/preferences/context';
+import { fetchPreferences } from '../../context/preferences/actions';
+
 
 const SportTeamFilter: React.FC = () => {
+  const isAuthenticated = !!localStorage.getItem('authToken')
   const newsState = useNewsState();
   const newsDispatch = useNewsDispatch();
   const sportsState = useSportsState();
   const sportsDispatch = useSportsDispatch();
-
+  const preferencesState:any = usePreferencesState();
+  const preferencesDispatch=usePreferencesDispatch();
+  const { preferences} = preferencesState;
+  console.log(preferences)
   const { articles, isLoading, isError, errorMessage } = newsState;
-  const { sports } = sportsState;
+  let { sports } = sportsState;
+  console.log(preferences)
 
   const [selectedSport, setSelectedSport] = useState<string>('');
   const [selectedTeam, setSelectedTeam] = useState<string>('');
-  const [teams, setTeams] = useState<any[]>([]);
+  let [teams, setTeams] = useState<any[]>([]);
 
   useEffect(() => {
     fetchNewsArticles(newsDispatch);
     fetchSports(sportsDispatch);
+    fetchPreferences(preferencesDispatch)
   }, [newsDispatch, sportsDispatch]);
 
   useEffect(() => {
@@ -55,6 +64,14 @@ const SportTeamFilter: React.FC = () => {
 
     return filteredArticles;
   };
+
+  console.log(preferences);
+  console.log(teams)
+  if(isAuthenticated){
+    if(preferences && preferences.sports && preferences.teams ){
+      sports=sports.filter((sport:any)=>preferences.sports.includes(sport.name))
+    }
+  }
 
   return (
     <div className="p-5 border border-gray-100 shadow-sm rounded-md w-1/4 mr-0 ml-2 mb-10 px-0 end-4 absolute">

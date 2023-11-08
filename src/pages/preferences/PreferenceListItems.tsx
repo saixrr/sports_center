@@ -94,15 +94,14 @@ export default function PreferenceListItems() {
         throw new Error(`Failed to update preferences: ${errorData.message}`);
       }
 
-      console.log("Preferences updated successfully!");
-      console.log("selectedSports", updatedPreferences);
+     
       window.location.reload();
     } catch (error: any) {
       console.error("Failed to update preferences:", error.message);
     }
   }
 
-  console.log(preferences)
+
   
 
   return (

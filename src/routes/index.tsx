@@ -41,9 +41,7 @@ const router = createBrowserRouter([
   {
     path: "account",
     element: (
-      <ProtectedRoute>
         <AccountLayout />
-      </ProtectedRoute>
     ),
     children: [
       { index: true, element: <Navigate to="/account/dashboard" replace /> },
@@ -64,7 +62,11 @@ const router = createBrowserRouter([
       
       },
       {path:"preferences",
-      element:<Preferences />
+      element: (
+        <ProtectedRoute>
+      <Preferences />
+      </ProtectedRoute>
+      )
     },
       
       {
