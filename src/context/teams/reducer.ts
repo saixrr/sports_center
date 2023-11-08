@@ -13,19 +13,22 @@ export interface TeamsState {
   errorMessage: string;
 }
 
-export const initialState: TeamsState = {
-  teams: [],
-  selectedTeam: null,
-  isLoading: false,
-  isError: false,
-  errorMessage: '',
-};
+
+
 
 export type TeamsActions =
   | { type: 'FETCH_TEAMS_REQUEST' }
   | { type: 'FETCH_TEAMS_SUCCESS'; payload: Team[] }
   | { type: 'FETCH_TEAMS_FAILURE'; payload: string }
   | { type: 'SELECT_TEAM'; payload: Team | null };
+
+  export const initialState: TeamsState = {
+    teams: [],
+    selectedTeam: null,
+    isLoading: false,
+    isError: false,
+    errorMessage: '',
+  };
 
 export const reducer = (state: TeamsState = initialState, action: TeamsActions): TeamsState => {
   switch (action.type) {

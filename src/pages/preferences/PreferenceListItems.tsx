@@ -115,7 +115,7 @@ export default function PreferenceListItems() {
         Preferences
       </button>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10 bg-white" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -138,23 +138,23 @@ export default function PreferenceListItems() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-2xl  dark:bg-black transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-2xl   transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
                     Favorite Sport
                   </Dialog.Title>
-                  <div className="mt-2 dark:text-white dark:bg-black ">
+                  <div className="mt-2 dark:text-white ">
                     <form onSubmit={handleSubmit}>
                       <div className="">
-                        <div className="grid grid-cols-5 gap-3  dark:bg-black">
+                        <div className="grid grid-cols-5 gap-3  ">
                           {sports &&
                             sports.length > 0 &&
                             sports.map((sport:any) => (
                               <div
                                 key={sport.id}
-                                className="flex items-center space-x-2  dark:bg-black"
+                                className="flex items-center space-x-2  "
                               >
                                 <input
                                   type="checkbox"
@@ -185,7 +185,7 @@ export default function PreferenceListItems() {
                         <h1 className="text-lg font-medium leading-6 text-gray-900">
                           Favorite Teams
                         </h1>
-                        <div className="grid grid-cols-5 gap-3">
+                        <div className="grid grid-cols-4 gap-5">
                           {teams.map((team:any) => (
                             <div
                               key={team.id}

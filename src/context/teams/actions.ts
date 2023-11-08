@@ -12,7 +12,7 @@ export const fetchTeams = async (dispatch: any) => {
     });
     const data = await response.json();
     console.log(data);
-    dispatch({ type: 'FETCH_TEAMS_SUCCESS', payload: data.teams });
+    dispatch({ type: 'FETCH_TEAMS_SUCCESS', payload: data });
   } catch (error) {
     console.log('Error fetching teams:', error);
     dispatch({ type: 'FETCH_TEAMS_FAILURE', payload: 'Unable to load teams' });
