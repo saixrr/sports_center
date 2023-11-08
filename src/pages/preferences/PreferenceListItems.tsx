@@ -2,6 +2,7 @@ import React, { Fragment,useState, useEffect } from "react";
 import { useSportsState,useSportsDispatch } from "../../context/sports/context";
 import {Dialog,Transition} from "@headlessui/react";
 import { API_ENDPOINT } from "../../config/constants";
+import {useNavigate} from 'react-router-dom';
 
 
 import { useTeamsState ,useTeamsDispatch} from "../../context/teams/context";
@@ -12,12 +13,14 @@ import { fetchTeams } from "../../context/teams/actions";
 import { fetchPreferences } from "../../context/preferences/actions";
 
 
+
 export default function PreferenceListItems() {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<string[]>([]);
   const [selectedMatch, setSelectedMatch] = useState<string[]>([]);
-  const [isOpen,setIsOpen] = useState(false)
+  const [isOpen,setIsOpen] = useState(true)
+  const Navigate = useNavigate()
 
   const sportState:any = useSportsState();
   const sportsDispatch=useSportsDispatch();
@@ -29,13 +32,13 @@ export default function PreferenceListItems() {
 
   const { sports } = sportState;
   const { teams } = teamState;
-  const openModal = () => {
-    setIsOpen(true);
-  };
+  // const openModal = () => {
+  //   setIsOpen(true);
+  // };
   // const navigate = useNavigate();
   const closeModal = () => {
     setIsOpen(false);
-    // navigate("../");
+    Navigate('/account/dashboard');
   };
   
   const { preferences, isLoading, isError, errorMessage } = preferencesState;
@@ -106,15 +109,15 @@ export default function PreferenceListItems() {
 
   return (
     <>
-      <button
+      {/* <button
         type="button"
         onClick={openModal}
         className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
       >
         Preferences
-      </button>
+      </button> */}
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10 bg-white" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10 bg-white" open={isOpen} onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

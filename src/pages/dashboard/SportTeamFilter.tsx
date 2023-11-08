@@ -76,12 +76,12 @@ const SportTeamFilter: React.FC = () => {
   return (
     <div className="p-5 border border-gray-100 shadow-sm rounded-md w-1/4 mr-0 ml-2 mb-10 px-0 end-4 absolute">
       {/* Options box on the right */}
-      <h1 style={{ color: "black" }} className="mb-2 font-semibold">
+      <h1 style={{ color: "black" }} className="mb-4 mt-0 font-semibold">
         Favourite sports
       </h1>
-      <div className="w-3/4 ml-2">
-        <div className="sticky mb-2">
-          <div className="flex flex-col space-y-2">
+      <div className="w-3/4 ml-2 mb-2">
+        <div className="sticky mb-6">
+          <div className="flex flex-col space-y-4">
             <select
               value={selectedSport}
               onChange={(e) => setSelectedSport(e.target.value)}
