@@ -23,7 +23,7 @@ const SigninForm: React.FC = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Sign-in failed. Response:', response.status, errorData);
-        setError(errorData);
+        setError(errorData.errors);
         return;
       }
 

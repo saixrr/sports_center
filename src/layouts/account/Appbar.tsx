@@ -101,7 +101,7 @@ const Appbar = () => {
                   {isAuthenticated && (
                     <Menu as="div" className="relative ml-3">
                       <div>
-                        <Link to="/account/preferences" className='hover:bg-violet-700'>
+                        <Link to="/account/dashboard/preferences" className='hover:bg-violet-700'>
                           {' '}
                           <div className="rounded-full bg-white p-1 text-gray-400 hover:text-blue-600">
                             <CogIcon className="h-6 w-6" aria-hidden="true" />

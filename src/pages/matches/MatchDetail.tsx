@@ -28,6 +28,17 @@ const MatchDetail: React.FC = () => {
     setIsOpen(false);
     Navigate('/account/dashboard'); // Navigate to the matches page
   };
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    return formattedDate;
+  };
+  
+  const formatTime = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const formattedTime = new Date(dateString).toLocaleTimeString('en-US', options);
+    return formattedTime;
+  };
 
   return (
     <div>
@@ -38,11 +49,11 @@ const MatchDetail: React.FC = () => {
           <span className="inline-block h-screen align-middle" aria-hidden="true">
             &#8203;
           </span>
-          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl" style={{ color: 'black' }}>
+          <div className="inline-block h-full w-full max-w-2xl p-4 my-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl" style={{ color: 'black' }}>
             <h2 className="nws-dtl-hdln font-bold">{selectedMatch.name}</h2>
             <p className="text-sm text-gray-500 mt-2">{selectedMatch.location}</p>
-            <p className="text-sm mt-2">Starts At: {selectedMatch.startsAt}</p>
-            <p className="text-sm mt-2">Ends At: {selectedMatch.endsAt}</p>
+            <p className="text-sm mt-2">Starts At: {formatDate(selectedMatch.startsAt)}, {formatTime(selectedMatch.startsAt)}</p>
+<p className="text-sm mt-2">Ends At: {formatDate(selectedMatch.endsAt)}, {formatTime(selectedMatch.endsAt)}</p>
             <p className="text-sm mt-2">Sport: {selectedMatch.sportName}</p>
             <p className="text-sm mt-2">Teams: {selectedMatch.teams.map((team) => team.name).join(' vs ')}</p>
             <p className="text-sm mt-4 text-gray-500">Score:</p>

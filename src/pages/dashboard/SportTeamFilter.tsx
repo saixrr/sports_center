@@ -69,7 +69,10 @@ const SportTeamFilter: React.FC = () => {
   console.log(teams)
   if(isAuthenticated){
     if(preferences && preferences.sports && preferences.teams ){
-      sports=sports.filter((sport:any)=>preferences.sports.includes(sport.name))
+      if(preferences.sports.length>0){
+        sports=sports.filter((sport:any)=>preferences.sports.includes(sport.name))
+      }
+      
     }
   }
 

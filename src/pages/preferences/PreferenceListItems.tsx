@@ -2,8 +2,7 @@ import React, { Fragment,useState, useEffect } from "react";
 import { useSportsState,useSportsDispatch } from "../../context/sports/context";
 import {Dialog,Transition} from "@headlessui/react";
 import { API_ENDPOINT } from "../../config/constants";
-
-
+import { useNavigate } from "react-router-dom";
 import { useTeamsState ,useTeamsDispatch} from "../../context/teams/context";
 import { usePreferencesState, usePreferencesDispatch } from "../../context/preferences/context";
 // import { updatePreferences } from "../../context/preferences/actions";
@@ -17,7 +16,7 @@ export default function PreferenceListItems() {
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<string[]>([]);
   const [selectedMatch, setSelectedMatch] = useState<string[]>([]);
-  const [isOpen,setIsOpen] = useState(false)
+  const [isOpen,setIsOpen] = useState(true)
 
   const sportState:any = useSportsState();
   const sportsDispatch=useSportsDispatch();
@@ -29,14 +28,18 @@ export default function PreferenceListItems() {
 
   const { sports } = sportState;
   const { teams } = teamState;
-  const openModal = () => {
-    setIsOpen(true);
-  };
-  // const navigate = useNavigate();
+  // const openModal = () => {
+  //   setIsOpen(true);
+  // };
+  const navigate = useNavigate();
   const closeModal = () => {
     setIsOpen(false);
-    // navigate("../");
+    navigate('/account/dashboard');
   };
+  const closeModal1=()=>{
+    console.log("hey1")
+    setIsOpen(false)
+  }
   
   const { preferences, isLoading, isError, errorMessage } = preferencesState;
   useEffect(()=>{
@@ -94,25 +97,30 @@ export default function PreferenceListItems() {
         throw new Error(`Failed to update preferences: ${errorData.message}`);
       }
 
-     
+     closeModal()
       window.location.reload();
+      // closeModal()
     } catch (error: any) {
       console.error("Failed to update preferences:", error.message);
     }
+    
   }
+  
 
-  console.log(preferences)
+  console.log(preferences);
+  
+
   
 
   return (
     <>
-      <button
+      {/* <button
         type="button"
         onClick={openModal}
         className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
       >
         Preferences
-      </button>
+      </button> */}
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10 bg-white" onClose={closeModal}>
           <Transition.Child
@@ -219,7 +227,7 @@ export default function PreferenceListItems() {
                         <div className="mt-4 space-x-2">
                           <button
                             type="submit"
-                            onClick={closeModal}
+                            onClick={closeModal1}
                             className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           >
                             Update

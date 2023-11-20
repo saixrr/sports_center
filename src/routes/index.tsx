@@ -13,7 +13,8 @@ import NewsDetail from "../pages/news/Newsdetail";
 import Matches from "../pages/matches";
 import MatchDetail from "../pages/matches/MatchDetail";
 import NotFound from "../pages/NotFound";
-import Preferences from "../pages/preferences";
+// import Preferences from "../pages/preferences";
+import PreferenceListItems from "../pages/preferences/PreferenceListItems";
 
 
 const router = createBrowserRouter([
@@ -58,17 +59,19 @@ const router = createBrowserRouter([
             path: "articles/:articleId",
             element:<NewsDetail />
           },
+          {path:"preferences",
+          element: (
+            <ProtectedRoute>
+          <PreferenceListItems />
+          </ProtectedRoute>
+          )
+        },
        
         ]
       
       },
-      {path:"preferences",
-      element: (
-        <ProtectedRoute>
-      <Preferences />
-      </ProtectedRoute>
-      )
-    },
+      
+     
       
       {
         path: "matches",

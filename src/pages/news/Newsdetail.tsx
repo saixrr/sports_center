@@ -28,6 +28,18 @@ const NewsDetail: React.FC = () => {
     setIsOpen(false);
     Navigate('/account/dashboard'); // Navigate to /account/dashboard
   };
+  const formatCustomDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    };
+    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    return formattedDate;
+  };
   return (
     <div>
       <Dialog
@@ -42,14 +54,14 @@ const NewsDetail: React.FC = () => {
           <span className="inline-block h-screen align-middle" aria-hidden="true">
             &#8203;
           </span>
-          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl " style={{color:"black"}}>
+          <div className="inline-block w-full max-w-2xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl " style={{color:"black"}}>
             <img
               src={selectedArticle.thumbnail}
               alt={selectedArticle.title}
-              className="w-full h-auto"
+              className="w-full h-72 mb-4"
             />
             <h2 className="nws-dtl-hdln font-bold" >{selectedArticle.title}</h2>
-            <p className="text-sm text-gray-500 mt-2">{selectedArticle.date}</p>
+            <p className="text-sm text-gray-500 mt-2">{formatCustomDate(selectedArticle.date)}</p>
             <p className="text-sm mt-2">
               Sport: {selectedArticle.sport.name}
             </p>
